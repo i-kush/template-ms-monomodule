@@ -1,0 +1,20 @@
+spring:
+  flyway:
+    enabled: false
+
+management:
+  endpoints:
+    enabled-by-default: false
+
+replace:
+  me:
+    replaceme_key: test_replaceme_value
+
+logging:
+  level:
+    org:
+      hibernate:
+        engine:
+          jdbc:
+            env:
+              internal: ERROR
