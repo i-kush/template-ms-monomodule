@@ -1,7 +1,7 @@
 plugins {
     id "java"
-    id "org.springframework.boot" version "3.3.2"
-    id "io.spring.dependency-management" version "1.1.6"
+    id "org.springframework.boot" version "3.4.5"
+    id "io.spring.dependency-management" version "1.1.7"
 }
 
 group = "com.kush"
@@ -27,15 +27,24 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.flywaydb:flyway-core:10.1.0"
-    implementation "org.postgresql:postgresql:42.3.8"
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation "org.flywaydb:flyway-core"
+    implementation "org.flywaydb:flyway-database-postgresql"
+    implementation "org.postgresql:postgresql"
+    implementation "org.mapstruct:mapstruct:1.6.3"
+
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.6.3"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "org.testcontainers:junit-jupiter:1.16.2"
-    testImplementation "org.testcontainers:postgresql:1.16.2"
+    testImplementation "org.springframework.boot:spring-boot-testcontainers"
+    testImplementation "org.testcontainers:junit-jupiter"
+    testImplementation "org.testcontainers:postgresql"
+
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
-test {
+tasks.named("test") {
     useJUnitPlatform()
 }
 
@@ -53,7 +62,7 @@ configurations {
     integrationRuntime.extendsFrom testRuntime
 }
 
-task integrationTest(type: Test) {
+tasks.register("integrationTest", Test) {
     useJUnitPlatform()
 
     testClassesDirs = sourceSets.integration.output.classesDirs

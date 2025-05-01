@@ -1,7 +1,7 @@
 package com.kush.replaceme.exception.handler;
 
-import com.kush.replaceme.controller.dto.response.ErrorDto;
-import com.kush.replaceme.controller.dto.response.ValidationFailedDto;
+import com.kush.replaceme.dto.response.ErrorDto;
+import com.kush.replaceme.dto.response.ErrorsDto;
 import com.kush.replaceme.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,31 +20,27 @@ public class BaseExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(BaseExceptionHandler.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDto> handle(MethodArgumentNotValidException e) {
-        List<ValidationFailedDto> validationResult = e
+    public ResponseEntity<ErrorsDto> handle(MethodArgumentNotValidException e) {
+        List<ErrorDto> errors = e
                 .getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(error -> new ValidationFailedDto(error.getField(), error.getDefaultMessage()))
+                .map(error -> new ErrorDto(String.format("%s -> %s", error.getField(), error.getDefaultMessage())))
                 .toList();
-        log.error("Validation failed: {} ", validationResult, e);
-        ErrorDto response = new ErrorDto(validationResult);
+        log.error("Validation failed: {} ", errors, e);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorsDto(errors), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorDto> handle(NotFoundException exception) {
-        ErrorDto response = new ErrorDto(exception.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorsDto> handle(NotFoundException exception) {
+        return new ResponseEntity<>(new ErrorsDto(new ErrorDto(exception.getMessage())), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDto> handle(Exception e) {
+    public ResponseEntity<ErrorsDto> handle(Exception e) {
         log.error("Unknown error", e);
-        ErrorDto response = new ErrorDto(e.getMessage());
-
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorsDto(new ErrorDto(e.getMessage())), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

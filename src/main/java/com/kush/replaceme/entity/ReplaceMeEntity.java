@@ -1,4 +1,4 @@
-package com.kush.replaceme.repository.entity;
+package com.kush.replaceme.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

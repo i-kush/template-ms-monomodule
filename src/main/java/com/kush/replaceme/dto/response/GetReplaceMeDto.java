@@ -1,4 +1,4 @@
-package com.kush.replaceme.controller.dto.response;
+package com.kush.replaceme.dto.response;
 
 public record GetReplaceMeDto(
         long id,

@@ -1,5 +1,6 @@
-package com.kush.replaceme.test;
+package com.kush.replaceme;
 
+import org.junit.jupiter.api.AfterAll;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -30,5 +31,10 @@ public abstract class BaseIntegrationTest {
         registry.add("spring.datasource.url", DB::getJdbcUrl);
         registry.add("spring.datasource.username", DB::getUsername);
         registry.add("spring.datasource.password", DB::getPassword);
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        DB.stop();
     }
 }

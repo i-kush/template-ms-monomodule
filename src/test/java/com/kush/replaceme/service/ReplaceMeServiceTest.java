@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 
 import java.util.Optional;
 
-public class ReplaceMeServiceTest extends BaseTest {
+class ReplaceMeServiceTest extends BaseTest {
 
     @InjectMocks
     private ReplaceMeService replaceMeService;
@@ -21,7 +21,7 @@ public class ReplaceMeServiceTest extends BaseTest {
     private ReplaceMeRepository replaceMeRepository;
 
     @Test
-    public void whenReplaceMeIsNotNotFoundByIdThenErrorShouldBeThrown() {
+    void whenReplaceMeIsNotNotFoundByIdThenErrorShouldBeThrown() {
         Mockito.when(replaceMeRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.empty());
 
         Assertions.assertThrows(

@@ -1,9 +1,10 @@
 package com.kush.replaceme.controller;
 
-import com.kush.replaceme.controller.dto.request.CreateReplaceMeDto;
-import com.kush.replaceme.controller.dto.response.GetReplaceMeDto;
+import com.kush.replaceme.dto.request.CreateReplaceMeDto;
+import com.kush.replaceme.dto.response.GetReplaceMeDto;
 import com.kush.replaceme.service.ReplaceMeService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/me")
+@RequiredArgsConstructor
 public class ReplaceMeController {
 
     private final ReplaceMeService replaceMeService;
-
-    public ReplaceMeController(ReplaceMeService replaceMeService) {
-        this.replaceMeService = replaceMeService;
-    }
 
     @PostMapping
     public ResponseEntity<GetReplaceMeDto> createReplaceMe(@Valid @RequestBody CreateReplaceMeDto createReplaceMeDto) {
