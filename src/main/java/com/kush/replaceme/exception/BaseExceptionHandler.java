@@ -1,8 +1,7 @@
-package com.kush.replaceme.exception.handler;
+package com.kush.replaceme.exception;
 
 import com.kush.replaceme.dto.response.ErrorDto;
 import com.kush.replaceme.dto.response.ErrorsDto;
-import com.kush.replaceme.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

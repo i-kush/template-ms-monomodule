@@ -1,17 +1,11 @@
 spring:
   profiles:
-    active: dev
-  datasource:
-    url: ${replaceme-database-url}
-    username: ${replaceme-database-user}
-    password: ${replaceme-database-password}
-  flyway:
-    baseline-on-migrate: true
+    active: local
   jpa:
     open-in-view: false
   mvc:
     servlet:
-      path: /api/v1
+      path: /api
 
 management:
   endpoints:
